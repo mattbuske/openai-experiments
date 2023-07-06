@@ -1,3 +1,6 @@
 
 __pycache__/
-Learning/sensitive/
+Learnin/*
+!Learnin/Readme.md
+Learnt/*
+!Learnt/Readme.md

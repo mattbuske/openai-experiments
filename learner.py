@@ -26,6 +26,13 @@ token_buffer=0
 hard_context_limit=200
 context_token_limit = (hard_context_limit-token_buffer)
 
+def create_directory(directory_path):
+    if not os.path.exists(directory_path):
+        os.makedirs(directory_path)
+        print(f"Directory '{directory_path}' created.")
+    else:
+        print(f"Directory '{directory_path}' already exists.")
+
 def append_to_json_file(file_path, new_objects):
     # Read the existing data from the JSON file
     with open(file_path, 'r') as file:
@@ -107,14 +114,24 @@ def split_text_into_chunks(file_path):
     
     return chunks
 
+# Processes documents in a folder and it's subfolder
 def process_documents(source_folder, destination_folder):
+
     # Loop through the files in the source folder
     for filename in os.listdir(source_folder):
 
+        # Ignore readme files as those are for the developers
         if "Readme.md" != filename:
 
             # Get the full path of the current file
             source_file = os.path.join(source_folder, filename)
+
+            # Check if the current item is a directory
+            if os.path.isdir(source_file):
+                # make sure the corresponding directory exists in the 'Learnt' folder
+                create_directory(os.path.join(destination_folder,filename))
+                # process the directories
+                process_documents(os.path.join(source_folder,filename),os.path.join(destination_folder,filename))
 
             # Check if the current item is a file
             if os.path.isfile(source_file):
