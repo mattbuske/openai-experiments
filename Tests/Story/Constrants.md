@@ -6,6 +6,7 @@ Initial prompt: I need you to act as a fiction writer and create a story based o
 ### Story 1
 Total length must be between 10,000-12,000 words.
 Chapter lengths must be between 1,428-1,714 words.
+Chapter part lengths must be between 700-800 words.
 
 ### Story 2
 Total length must be between 5,000-6,000 words.
