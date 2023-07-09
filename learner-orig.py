@@ -22,16 +22,9 @@ messages = [
 summary_prompt = "Please provide a concise yet comprehensive summary of the following text with the following constraints in order of importance, 1. without loss of information and 2. using the least amount of tokens possible: \n\n"
 
 # account for the initial prompt tokens and a buffer
-token_buffer=0
-hard_context_limit=200
+token_buffer=100
+hard_context_limit=4097
 context_token_limit = (hard_context_limit-token_buffer)
-
-def create_directory(directory_path):
-    if not os.path.exists(directory_path):
-        os.makedirs(directory_path)
-        print(f"Directory '{directory_path}' created.")
-    else:
-        print(f"Directory '{directory_path}' already exists.")
 
 def append_to_json_file(file_path, new_objects):
     # Read the existing data from the JSON file
@@ -114,53 +107,55 @@ def split_text_into_chunks(file_path):
     
     return chunks
 
-# Processes documents in a folder and it's subfolder
-def process_documents(source_folder, destination_folder):
+def get_chunk_summary(chunk):
+    summary = chunk
+    messages.append(HumanMessage(content=summary_prompt+chunk))
+    summary = chat(messages=messages).content
+    messages.pop()
+    return summary;
 
+def process_documents(source_folder, destination_folder):
     # Loop through the files in the source folder
     for filename in os.listdir(source_folder):
+        # Get the full path of the current file
+        source_file = os.path.join(source_folder, filename)
 
-        # Ignore readme files as those are for the developers
-        if "Readme.md" != filename:
+        # Check if the current item is a file
+        if os.path.isfile(source_file):
+            file_extension = os.path.splitext(source_file)[1].lower()
+            if file_extension == '.pdf':
+                chunks = split_pdf_into_chunks(source_file)
+            else:
+                chunks = split_text_into_chunks(source_file)
+        
+            for i in chunks:
+                # Get Full Embeddings for the Text Chunk
+                full_embeds = get_embedding(i,engine='text-embedding-ada-002')
+                # Get a Summarized Version of the Chunk
+                summary = get_chunk_summary(i)
+                num_tokens = chat.get_num_tokens(summary)
+                print(str(num_tokens))
+                # Get Summary Embeddings for the Text Chunk
+                embeds = get_embedding(summary,engine='text-embedding-ada-002')
 
-            # Get the full path of the current file
-            source_file = os.path.join(source_folder, filename)
-
-            # Check if the current item is a directory
-            if os.path.isdir(source_file):
-                # make sure the corresponding directory exists in the 'Learnt' folder
-                create_directory(os.path.join(destination_folder,filename))
-                # process the directories
-                process_documents(os.path.join(source_folder,filename),os.path.join(destination_folder,filename))
-
-            # Check if the current item is a file
-            if os.path.isfile(source_file):
-                file_extension = os.path.splitext(source_file)[1].lower()
-                if file_extension == '.pdf':
-                    chunks = split_pdf_into_chunks(source_file)
-                else:
-                    chunks = split_text_into_chunks(source_file)
-            
-                for i in chunks:
-                    # Get Full Embeddings for the Text Chunk
-                    embeds = get_embedding(i,engine='text-embedding-ada-002')
-
-                    obj = {
-                        'uid': str(id(embeds)),
-                        'embeddings': embeds,
-                        'meta': {
-                            'title': filename,
-                            'file': filename,
-                            'text': i  # Add the 'text' to the metadata
-                        }
+                obj = {
+                    'uid': str(id(embeds)),
+                    'embeddings': embeds,
+                    'meta': {
+                        'title': filename,
+                        'file': filename,
+                        'summary': summary,
+                        'full_embeddings': full_embeds, # Add the 'Full' Embeddings to the metadata
+                        'text': i  # Add the 'text' to the metadata
                     }
+                }
 
-                    append_to_json_file('knowledge.json',obj)
+                append_to_json_file('knowledge.json',obj)
 
-                # Move the processed document to the destination folder
-                destination_file = os.path.join(destination_folder, filename)
-                shutil.move(source_file, destination_file)
-                print(f"Moved {filename} to {destination_folder}")
+            # Move the processed document to the destination folder
+            destination_file = os.path.join(destination_folder, filename)
+            shutil.move(source_file, destination_file)
+            print(f"Moved {filename} to {destination_folder}")
 
 # Process the Documents
 process_documents('Learnin', 'Learnt')
