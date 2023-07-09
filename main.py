@@ -7,6 +7,8 @@ import os
 import shutil
 import PyPDF2
 import tiktoken
+import email
+import quopri
 
 # Initial Context
 context = "You are a helpful assistant that ingests files and stores it locally. "
@@ -118,6 +120,48 @@ def combine_chunks(chunks, extracted_text):
 
     return chunks
 
+# Get all them Chunks
+def get_chunks(text):
+    # Return an empty list if the text is empty or whitespace
+    if not text or text.isspace():
+        return []
+
+    chunks = combine_chunks([], text)
+
+    return chunks
+
+# Get the File Type 'Header'
+def get_file_header(file_type):
+    return f"File Type: {file_type}"
+
+# Splits the extracted text from a email file into chunks
+def chunk_email(file_path):
+
+    # Open the Email File
+    with open(file_path) as email_file:
+        # Get the Email Message
+        email_message = email.message_from_file(email_file)
+        extracted_text = get_file_header('Email')
+        # Get the Header Information
+        extracted_text += " Header Information:"
+        header_values = email_message.items()
+        for header, value in header_values:
+            extracted_text += f" {header}: {value}"
+        # Get the email content
+        if email_message.is_multipart():
+            for part in email_message.walk():
+                if part.get_content_type() == 'text/plain':
+                    charset = part.get_content_charset()
+                    if part.get('Content-Transfer-Encoding') == 'quoted-printable':
+                        encoded_text = part.get_payload(decode=True)
+                        body = quopri.decodestring(encoded_text).decode(charset)
+                    else:
+                        body = part.get_payload(decode=True).decode(charset)
+                    extracted_text += f" Body: {body}"
+                    break
+
+    return get_chunks(extracted_text)
+
 # Splits the extracted text from a pdf into chunks
 def chunk_pdf(file_path):
 
@@ -137,13 +181,7 @@ def chunk_pdf(file_path):
             # Append the extracted text to the result
             extracted_text += text
 
-    # Return an empty list if the text is empty or whitespace
-    if not extracted_text or extracted_text.isspace():
-        return []
-
-    chunks = combine_chunks([], extracted_text)
-
-    return chunks
+    return get_chunks(extracted_text)
 
 # Splits the extracted text from a text file into chunks
 def chunk_text_file(file_path):
@@ -151,13 +189,7 @@ def chunk_text_file(file_path):
     with open(file_path, 'r') as file:
         extracted_text = file.read()  # Read the file and replace newlines with spaces
 
-    # Return an empty list if the text is empty or whitespace
-    if not extracted_text or extracted_text.isspace():
-        return []
-
-    chunks = combine_chunks([], extracted_text)
-    
-    return chunks
+    return get_chunks(extracted_text)
 
 def get_user_message(text):
     return {"role": "user", "content": text}
@@ -223,6 +255,8 @@ def process_documents(source_folder, destination_folder):
                 file_extension = os.path.splitext(source_file)[1].lower()
                 if file_extension == '.pdf':
                     chunks = chunk_pdf(source_file)
+                elif file_extension == '.eml':
+                    chunks = chunk_email(source_file)
                 else:
                     chunks = chunk_text_file(source_file)
             
