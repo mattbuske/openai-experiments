@@ -1,20 +1,27 @@
 # Story Outlines
 
 ## 1. Beneath the Echo
-
-Chapter 1: Introduction of our protagonist, a seasoned seismologist working at a remote research station. They discover an abnormal pattern within the seismic readings that doesn't match any known natural phenomena.
-
-Chapter 2: The Seismologist further investigates the anomaly, using advanced equipment to isolate and study the signal. As they dig deeper, they start noticing similar anomalies being reported from different parts of the world.
-
-Chapter 3: Research leads to a set of ancient texts, folklore about a forgotten cult that worshipped a deity said to sleep beneath the Earth. Strangely, the descriptions of the cult's rituals match patterns within the signal.
-
-Chapter 4: Protagonist's attempts to decipher the ancient texts lead to unnerving, hallucinatory episodes. Time seems to warp, horrific visions flash in and out of sight, giving glimpses of the cult's activities and a monstrous entity stirring in its sleep.
-
-Chapter 5: Their understanding of the cult's purpose grows – the signal is a call, a ritual chant meant to awaken the sleeping deity. As the reality of the situation sinks in, the Seismologist is torn between disbelief and the mounting evidence.
-
-Chapter 6: In a desperate attempt to halt the signal, the Seismologist risks everything, plunging into the depths of the hallucinatory horrors that the cult's ancient ritual invokes. They emerge seemingly victorious, but the evidence of their struggle remains.
-
-Conclusion: The signal ceases - for now. A hint at the existence of others involved in the same struggle elsewhere. The Seismologist is left questioning - Did they stop it? Was it real, or just the product of their isolation and stress? What if the silence is merely the calm before a storm?
+- Chapter 1:
+  - Part 1: Introduction of our protagonist, a seasoned seismologist working at a remote research station. They begin to notice an abnormal pattern within the seismic readings.
+  - Part 2: Further investigation confirms that the anomaly doesn't match any known natural phenomena, setting the stage for a deeper investigation.
+- Chapter 2:
+  - Part 1: The Seismologist starts investigating the anomaly, using advanced equipment to isolate and study the signal.
+  - Part 2: Reports start coming in of similar anomalies from different parts of the world, adding to the mystery.
+- Chapter 3:
+  - Part 1: The research leads to the discovery of a set of ancient texts, filled with folklore about a forgotten cult that worshipped a deity said to sleep beneath the Earth.
+  - Part 2: The Seismologist notes strange similarities between the cult's rituals and patterns within the signal.
+- Chapter 4:
+  - Part 1: Deciphering the ancient texts becomes an eerie journey, as time seems to warp and horrific visions flash in and out of sight.
+  - Part 2: These hallucinations give glimpses of the cult's activities and a monstrous entity stirring in its sleep, deepening the protagonist's unease.
+- Chapter 5:
+  - Part 1: The understanding of the cult's purpose grows - the signal appears to be a call, a ritual chant meant to awaken the sleeping deity.
+  - Part 2: The Seismologist is left struggling with disbelief and the mounting evidence, a conflict that takes a toll on their sanity.
+- Chapter 6:
+  - Part 1: In a desperate attempt to halt the signal, the Seismologist plunges into the depths of the hallucinatory horrors that the cult's ancient ritual invokes.
+  - Part 2: They emerge seemingly victorious, but scarred and unsure, their struggle leaving a lasting imprint.
+- Epilogue:
+  - Part 1: The signal ceases - for now. A sense of temporary relief washes over the Seismologist.
+  - Part 2: But hints of others involved in the same struggle elsewhere leave them questioning their victory. Was it real, or just the product of their isolation and stress? What if the silence is merely the calm before a storm?
 
 ## 2. The Call from the Deep
 
