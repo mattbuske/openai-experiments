@@ -1,0 +1,60 @@
+site_name: Story Reader
+site_description: Story Reader for generated stories
+docs_dir: Story
+extra:
+    version: 0.2.0
+plugins:
+  - search
+  - macros
+  - tags
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+theme:
+    name: material
+    features:
+        - navigation.instant
+        - navigation.tracking
+        - navigation.tabs
+        #- navigation.tabs.sticky
+        - navigation.indexes
+        - navigation.top
+        - content.tabs
+        - content.tabs.link
+        - content.code.copy
+        - search.suggest
+        - search.highlight
+        - search.share
+        #- toc.integrate
+    palette:
+      # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue 
+      accent: blue
+      toggle:
+        icon: material/brightness-7 
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: blue 
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+'nav':
+    - 'Home': 
+        - 'Readme.md'
+    - 'Beneath the Echo':
+        - 'Chapter 1': 'Beneath_the_Echo/Chapter_1.md'
+        - 'Chapter 2': 'Beneath_the_Echo/Chapter_2.md'
+        - 'Chapter 3': 'Beneath_the_Echo/Chapter_3.md'
+        - 'Chapter 4': 'Beneath_the_Echo/Chapter_4.md'
+        - 'Chapter 5': 'Beneath_the_Echo/Chapter_5.md'
+        - 'Chapter 6': 'Beneath_the_Echo/Chapter_6.md'
+        - 'Epilogue': 'Beneath_the_Echo/Epilogue.md'

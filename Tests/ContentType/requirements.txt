@@ -1,0 +1,7 @@
+# Documentation static site generator & deployment tool
+mkdocs>=1.4.2
+
+# Add your custom theme if not inside a theme_dir
+# (https://github.com/mkdocs/mkdocs/wiki/MkDocs-Themes)
+mkdocs-material>=8.5.10
+mkdocs-macros-plugin>=0.7.0
